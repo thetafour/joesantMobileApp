@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>JAXI Quote System</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	<script src="_js/JAXIJS.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	<style>
+		.btnStyle {
+			width: 200px;
+			margin: 0 auto;
+		}
+		.imgStyle {
+			height: 87.5x;
+			width: 168.5px;
+		}
+		.boxStyle {
+			background-color: #C1DAFF;
+		}
+		.tableStyle {
+			text-align: center;
+			border-spacing: 15px;
+			color: white;
+			background: black;
+			font-family: Consolas;
+		}
+	</style>
+	<script>
+	</script>
+</head>
+
+<body>
+	<!-- Home Page (Customer Appointments Page) -->
+	<div data-role="page" id="home">
+		<div>
+			<header data-role="header">
+				<a href="http://www.colombusroofing.com/" data-theme="b" class="ui-icon-alt" data-role="button" data-icon="info" data-iconpos="notext" data-inline="true"></a>
+				<h2>Customer Appointments</h2>
+			</header>
+			<div align="center">
+				<img src="_img/c_a_r.png" alt="image" class="imgStyle" />
+			</div>
+		</div>
+
+		<div data-role="content">
+			<ul data-role="listview" data-filer data-inset="true" data-filter="true" id="appDates">
+			</ul>
+		</div>
+
+		<div data-role="footer">
+			<h4>© JAXI Solutions - 2015</h4>
+		</div>
+	</div>
+
+	<!-- Customer Info -->
+	<div data-role="page" id="info">
+		<div>
+			<header data-role="header">
+				<a href="#home" data-theme="b" class="ui-icon-alt" data-role="button" data-icon="home" data-iconpos="notext" data-inline="true"></a>
+				<h2>Customer Info</h2>
+			</header>
+			<div align="center">
+				<img src="_img/c_a_r.png" alt="image" class="imgStyle" />
+			</div>
+		</div>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#quote" data-icon="grid">Generate Quote</a>
+				</li>
+				<li><a href="#map_page" data-icon="star">Display Directions</a>
+				</li>
+			</ul>
+		</div>
+		<div class="boxStyle">
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<div id="name"></div>
+					<div id="city"></div>
+					<div id="prov"></div>
+					<div id="phoneNum"></div>
+				</div>
+				<div class="ui-block-b">
+					<div id="address"></div>
+					<div id="postal"></div>
+					<div id="note"></div>
+				</div>
+			</div>
+			<div id="map_canvas" style="height:350px;"></div>
+		</div>
+
+		<div data-role="footer">
+			<h4>© JAXI Solutions - 2015</h4>
+		</div>
+	</div>
+
+	<!-- Customers Location -->
+	<div data-role="page" id="map_page">
+		<div>
+			<header data-role="header">
+				<a href="#info" data-theme="b" class="ui-icon-alt" data-role="button" data-inline="true">Back</a>
+				<h2>Customers Location</h2>
+			</header>
+			<div align="center">
+				<img src="_img/c_a_r.png" alt="image" class="imgStyle" />
+			</div>
+		</div>
+		<!--<div id="map_canvas" style="height:350px;"></div>-->
+		<div id="results" style="display:none;">
+			<div id="directions"></div>
+		</div>
+
+		<div data-role="footer">
+			<h4>© JAXI Solutions - 2015</h4>
+		</div>
+	</div>
+	
+	<!-- Create a Quote -->
+	<div data-role="page" id="quote">
+		<div>
+			<header data-role="header">
+				<a href="#info" data-theme="b" class="ui-icon-alt" data-role="button" data-inline="true">Back</a>
+				<h2>Create Quote</h2>
+			</header>
+			<div align="center">
+				<img src="_img/c_a_r.png" alt="image" class="imgStyle" />
+			</div>
+		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<h3>Roofing Calculator:</h3>
+				<div data-role="fieldcontain">
+					<label for="name"><strong>Length:</strong>
+					</label>
+					<input type="number" id="length" min="0" placeholder="length in sq. ft." />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="name"><strong>Base:</strong>
+					</label>
+					<input type="number" id="base" min="0" placeholder="base in sq. ft." />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="name"><strong>Pitch:</strong>
+					</label>
+					<input type="number" id="slant" min="0" placeholder="pitch in sq. ft." />
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<h3>Material:</h3>
+				<div data-role="fieldcontain">
+					<label for="material" class="select"><strong>Shingles:</strong>
+					</label>
+					<select name="material" id="material">
+						<option value="10">Asphalt Black ($10.00 per sq. ft.)</option>
+						<option value="20">Asphalt Red ($20.00 per sq. ft.)</option>
+						<option value="15">Asphalt Green ($15.00 per sq. ft.)</option>
+						<option value="15">Asphalt Blue ($15.00 per sq. ft.)</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<input type="submit" id="submit" value="Submit Quote" />
+		<div id="table">
+			<div id="output"></div>
+		</div>
+
+		<div data-role="footer">
+			<h4>© JAXI Solutions - 2015</h4>
+		</div>
+	</div>
+</body>
+
+</html>
